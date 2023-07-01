@@ -10,7 +10,6 @@ background-color: crimson;
 .green {
 background-color: lightgreen;
 }
-.italic-bold {
-font-style: italic;
-font-weight: bold;
+.cyan {
+    background-color: cyan;
 }
