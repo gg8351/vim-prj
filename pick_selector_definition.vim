@@ -9,9 +9,9 @@ function! PickSelectorDefinition()
   let selector_type = expand('<cword>')
 
   if selector_type == 'id'
-    exe 'vimgrep /^#'.selector.' {/j *.css'
+    exe 'vimgrep /^#'.selector.' {/j style/main.css'
   elseif selector_type == 'class'
-    exe 'vimgrep /^\.'.selector.' {/j *.css'
+    exe 'vimgrep /^\.'.selector.' {/j style/main.css'
   else
     return
   endif
