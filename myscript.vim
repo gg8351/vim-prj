@@ -2,7 +2,7 @@ function! HtmlToCss()
   let filename = bufname("%")
   let correct_file = match(filename, ".html")
   if correct_file < 0
-    echo "The file you've opened is not CSS file."
+    echo "The file you've opened is not an HTML file."
     return
   endif
   let saved_view = winsaveview()
@@ -24,29 +24,21 @@ function! HtmlToCss()
     return
   endif
 
-  let matches = getqflist()->mapnew({ i, entry -> [bufname(entry.bufnr), entry.text] })
-  let texts = matches->mapnew({ i, match -> $"{i + 1} {match[1]} (in file: {match[0]})" })
-  let files = matches->mapnew({ _, match -> match[0] })
-
-  let choices = extend(["Pick one"], texts)
-  let choice_index = inputlist(choices) - 1
-  if choice_index == -1
-    return
-  elseif
-  exe 'vertical split '.files[choice_index]
+  copen
 endfunction
 
 function! CssToHtml()
   let filename = bufname("%")
   let correct_file = match(filename, ".css")
   if correct_file < 0
-    echo "The file you've opened is not CSS file."
+    echo "The file you've opened is not a CSS file."
     return
   endif
   let saved_view = winsaveview()
   defer winrestview(saved_view)
 
   " Добавяме - към 'iskeyword' за да намиираме класове/ид които съдържат - със <cword>
+  " Добавяме #,. за да използваме <cword> за целия селектор на класа
   set iskeyword+=.
   set iskeyword+=#
   set iskeyword+=-
@@ -65,18 +57,7 @@ function! CssToHtml()
     return
   endif
 
-  let matches = getqflist()->mapnew({ i, entry -> [bufname(entry.bufnr), entry.text] })
-  let texts = matches->mapnew({ i, match -> $"{i + 1} {match[1]} (in file: {match[0]})" })
-  let files = matches->mapnew({ _, match -> match[0] })
-
-  let choices = extend(["Pick one"], texts)
-  let choice_index = inputlist(choices) - 1
-  if choice_index == -1
-    exe 'edit '.filename
-    return
-  elseif
-  exe 'vertical split '.files[choice_index]
-  endif
+  copen
 endfunction
 
 nnoremap <F5> :call HtmlToCss()<CR>
