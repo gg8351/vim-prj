@@ -1,4 +1,10 @@
 function! HtmlToCss()
+  let filename = bufname("%")
+  let correct_file = match(filename, ".html")
+  if correct_file < 0
+    echo "The file you've opened is not CSS file."
+    return
+  endif
   let saved_view = winsaveview()
   defer winrestview(saved_view)
 

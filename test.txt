@@ -1,2 +1,0 @@
-class="sth"
-class="sth oth"
